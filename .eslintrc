@@ -1,0 +1,28 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "indent": ["error", 2, {"SwitchCase": 1}],
+    "@typescript-eslint/indent": ["error", 2],
+    "no-tabs": ["error"],
+    "react/jsx-tag-spacing": ["error", {"beforeSelfClosing": "never", "closingSlash": "never", "beforeClosing": "never"}],
+    "react/react-in-jsx-scope": "off",
+    "no-trailing-spaces": ["error"]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

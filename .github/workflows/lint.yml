@@ -1,0 +1,27 @@
+name: Lint Check
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+  jobs:
+    lint:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v3
+
+        - name: Setup up Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: '21.7.1'
+
+        - name: Installing dependencies
+          run: npm install
+
+        - name: Run Linter
+          run: npm run lint
