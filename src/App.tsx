@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import { Navigation } from './components/Navigation/Navigation';
-import { Home } from './components/types/Home/Home';
+import { Navigation } from './components/Navigation';
+import { Home } from './components/Home';
 
 function App() {
   return (
