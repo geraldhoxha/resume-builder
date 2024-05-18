@@ -3,3 +3,5 @@ export type MenuItem = {
   path: string
   icon?: JSX.Element
 }
+
+export type CarouselMode = 'dark' | 'light' | 'adaptive' | 'no-anim'
