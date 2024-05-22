@@ -16,7 +16,7 @@
     "indent": ["error", 2, {"SwitchCase": 1}],
     "@typescript-eslint/indent": ["error", 2],
     "no-tabs": ["error"],
-    "react/jsx-tag-spacing": ["error", {"beforeSelfClosing": "never", "closingSlash": "never", "beforeClosing": "never"}],
+    "react/jsx-tag-spacing": ["error", {"beforeSelfClosing": "always", "closingSlash": "never", "beforeClosing": "never"}],
     "react/react-in-jsx-scope": "off",
     "no-trailing-spaces": ["error"]
   },
