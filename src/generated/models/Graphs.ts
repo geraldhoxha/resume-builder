@@ -17,8 +17,8 @@ export type Scalars = {
 
 export type AuthOps = {
   __typename?: 'AuthOps';
-  login: Scalars['Any']['output'];
-  register: Scalars['Any']['output'];
+  login: AuthResponse;
+  register: AuthResponse;
 };
 
 
@@ -30,6 +30,18 @@ export type AuthOpsLoginArgs = {
 
 export type AuthOpsRegisterArgs = {
   input: NewUser;
+};
+
+export type AuthResponse = {
+  __typename?: 'AuthResponse';
+  token: JwtToken;
+  user: User;
+};
+
+export type JwtToken = {
+  __typename?: 'JwtToken';
+  accessToken: Scalars['String']['output'];
+  refreshToken: Scalars['String']['output'];
 };
 
 export type Mutation = {

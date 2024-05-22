@@ -13,7 +13,7 @@ export const RightMenu = ({ mode }:Mode) => {
     <Menu mode={mode}>
       <Menu.SubMenu title={
         <>
-          <Avatar icon={<UserOutlined/>}/>
+          <Avatar icon={<UserOutlined />} />
           <span className='username'> Placeholder </span>
         </>
       }>

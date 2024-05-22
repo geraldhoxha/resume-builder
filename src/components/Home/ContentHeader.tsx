@@ -7,7 +7,7 @@ export const ContentHeader = () => {
   }
   return (
     <Carousel style={{background: "#f1f1f1"}} afterChange={onChange}>
-      <First mainMode='dark'/>
+      <First mainMode='dark' />
       <div>
       </div>
       <div>

@@ -17,6 +17,10 @@ export const leftNavPath: MenuItem[] = [
   {
     name: 'About',
     path: 'about',
+  },
+  {
+    name: 'Login',
+    path: '/login'
   }
 ]
 
@@ -24,16 +28,16 @@ export const rightNavPath: MenuItem[] = [
   {
     name: 'Projects',
     path: '/projects',
-    icon: <CodeOutlined/>
+    icon: <CodeOutlined />
   },
   {
     name: 'Profile',
     path: '/profile',
-    icon: <UserOutlined/>
+    icon: <UserOutlined />
   },
   {
     name: 'Logout',
     path: '/log-out',
-    icon: <LogoutOutlined/>
+    icon: <LogoutOutlined />
   }
 ]

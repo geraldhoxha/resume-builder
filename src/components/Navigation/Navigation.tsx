@@ -32,18 +32,18 @@ export const Navigation = () => {
               ? (
                 <>
                   <div className="leftMenu">
-                    <RightMenu mode={'horizontal'}/>
+                    <RightMenu mode={'horizontal'} />
                   </div>
 
                   <div className="rightMenu">
-                    <LeftMenu mode={'horizontal'}/>
+                    <LeftMenu mode={'horizontal'} />
                   </div>
                 </>
               )
               : (
                 <>
                   <Button className="menuButton" type="text" onClick={showDrawer}>
-                    <MenuOutlined/>
+                    <MenuOutlined />
                   </Button>
                   <Drawer
                     title={'Brand'}
@@ -53,8 +53,8 @@ export const Navigation = () => {
                     open={visible}
                     style={{ zIndex: 99999 }}
                   >
-                    <LeftMenu mode={'inline'}/>
-                    <RightMenu mode={'inline'}/>
+                    <LeftMenu mode={'inline'} />
+                    <RightMenu mode={'inline'} />
                   </Drawer>
                 </>
               )
@@ -63,7 +63,7 @@ export const Navigation = () => {
         </Layout.Header>
       </nav>
       <Layout.Content>
-        <Outlet/>
+        <Outlet />
       </Layout.Content>
       <Layout.Footer>
         <h1>Footer</h1>
