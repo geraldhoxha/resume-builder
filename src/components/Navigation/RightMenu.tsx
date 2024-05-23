@@ -14,7 +14,7 @@ export const RightMenu = ({ mode }:Mode) => {
       <Menu.SubMenu title={
         <>
           <Avatar icon={<UserOutlined />} />
-          <span className='username'> Placeholder </span>
+          <span className='username'>  </span>
         </>
       }>
         {rightNavPath.map((item: MenuItem) => (

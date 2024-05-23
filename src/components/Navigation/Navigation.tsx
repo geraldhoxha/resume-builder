@@ -6,9 +6,11 @@ import { LeftMenu } from './LeftMenu'
 import { RightMenu } from './RightMenu'
 import { useWindowDimentions } from '../../tools/WindowDimentions'
 import '../../styles/Navigation/Navigation.scss'
+import { useUser } from '../../tools/Context'
 
 export const Navigation = () => {
   const [visible, setVisible] = useState<boolean>(false)
+  const userContext = useUser()
   const showDrawer = () => {
     setVisible(!visible)
   }
@@ -32,7 +34,10 @@ export const Navigation = () => {
               ? (
                 <>
                   <div className="leftMenu">
-                    <RightMenu mode={'horizontal'} />
+                    {userContext?.user !== undefined
+                      ? <RightMenu mode={'horizontal'} />
+                      : ""
+                    }
                   </div>
 
                   <div className="rightMenu">
@@ -54,7 +59,10 @@ export const Navigation = () => {
                     style={{ zIndex: 99999 }}
                   >
                     <LeftMenu mode={'inline'} />
-                    <RightMenu mode={'inline'} />
+                    {userContext?.user !== undefined
+                      ? <RightMenu mode={'inline'} />
+                      : ""
+                    }
                   </Drawer>
                 </>
               )

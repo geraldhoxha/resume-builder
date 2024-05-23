@@ -16,11 +16,7 @@ export const leftNavPath: MenuItem[] = [
   },
   {
     name: 'About',
-    path: 'about',
-  },
-  {
-    name: 'Login',
-    path: '/login'
+    path: '/about',
   }
 ]
 

@@ -9,7 +9,7 @@ export const setTokens = (accessToken: string, refreshToken: string) => {
   localStorage.setItem("auth_token", accessToken)
   localStorage.setItem("refresh_token", refreshToken)
 }
-const clearTokens = () => {
+export const clearTokens = () => {
   localStorage.removeItem("auth_token")
   localStorage.removeItem("refresh_token")
 }
