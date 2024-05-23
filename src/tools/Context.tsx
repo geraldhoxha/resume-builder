@@ -13,7 +13,7 @@ type User = {
 }
 interface UserContextType {
   user?: User,
-  setUser: (user: User) => void
+  setUser: (user?: User) => void
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)

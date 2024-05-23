@@ -1,20 +1,13 @@
-import { Route, RouteProps, Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useUser } from '../../tools/Context';
 
 
-const PrivateRoute: React.FC<RouteProps> = ({ element, ...rest }: RouteProps) => {
+export const PrivateRoute: React.FC = () => {
   const context = useUser();
-
-  return (
-    <Route
-      {...rest}
-      element={
-        context?.user
-          ? element
-          : <Navigate to="/login" state={{ from: rest.path }} replace />
-      }
-    />
-  );
+  if (context?.user === undefined) {
+    return <Navigate to='/login' replace />
+  }
+  return <Outlet />
 };
 
 export default PrivateRoute;
