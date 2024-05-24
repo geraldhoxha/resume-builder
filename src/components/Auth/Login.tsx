@@ -1,56 +1,130 @@
-import { useLazyQuery, useMutation } from "@apollo/client"
-import { useState } from "react"
-import { ELTest, UserLogin } from "../../generated/Models/model"
-import { Client, setTokens } from "../../tools/ApolloClient"
-import { LoginToken } from "../types/user"
-import { jwtDecode } from 'jwt-decode'
-import { useUser } from "../../tools/Context"
-import { useNavigate } from "react-router"
 
+import { useState } from 'react';
+import { Form, Input, Button, Card, Typography, message } from 'antd';
+import { useMutation } from '@apollo/client';
+import { Client, setTokens } from '../../tools/ApolloClient';
+import { UserLogin, UserSignup } from '../../generated/Models/model';
+import { LoginToken, SignupToken, LoginUserType, SignupUserType } from '../types/user';
+import { useUser } from '../../tools/Context';
+import { useNavigate } from 'react-router';
+import { NewUser } from '../../generated/models/Graphs';
 
+const { Title } = Typography;
 
-export function LoginUser() {
+type UserLoginForm = {
+  email: string,
+  password: string,
+  name?: string,
+}
 
-  const [userEmail, setUserEmail] = useState<string>("")
-  const [userPass, setUserPass] = useState<string>("")
-  // const [canSubmit, setCanSubmit] = useState<boolean>(false)
-  const userProps = useUser()
+export const Login = () => {
+  const [isRegister, setIsRegister] = useState(false);
+  const [login] = useMutation<LoginToken, LoginUserType>(UserLogin, { client: Client, fetchPolicy: 'no-cache' })
+  const [signup] = useMutation<SignupToken, SignupUserType>(UserSignup, { client: Client, fetchPolicy: 'no-cache' })
   const [loading, setLoaading] = useState<boolean>(false)
-  const [login] = useMutation<LoginToken>(UserLogin, { client: Client, fetchPolicy: 'no-cache' })
-  const [testthis] = useLazyQuery(ELTest)
+  const userProps = useUser()
   const navigate = useNavigate()
-  const handleSubmit = async () => {
+  const [form] = Form.useForm()
+
+  const handleToggle = () => {
+    setIsRegister(!isRegister);
+  };
+  const onFinish = async (values: UserLoginForm) => {
+    const { name, email, password } = values
     setLoaading(true)
-    await login({ variables: { email: userEmail, password: userPass } }).then((resp) => {
-      if (resp.data?.auth.login.token !== undefined) {
-        const { name } = jwtDecode<{ name: string }>(resp.data.auth.login.token.refreshToken)
-        if (userProps !== undefined && userProps?.user === undefined) {
-          userProps.setUser({ Name: name, Email: userEmail })
-        }
-        const { accessToken, refreshToken } = resp.data.auth.login.token
-        setTokens(accessToken, refreshToken)
+    if (isRegister) {
+      if (name === undefined) {
+        return
       }
-      setLoaading(false)
-      navigate('/')
-    })
-      .catch(err => {
-        console.log("zz", err)
+      const input: NewUser = { name: name, password: password, email: email }
+      await signup({ variables: { input: input } }).then(resp => {
+        const data = resp.data?.auth.register
+        if (data?.token !== undefined) {
+          if (userProps !== undefined && userProps.user === undefined) {
+            userProps.setUser({ name: data.user.name, email: data.user.email })
+          }
+          setTokens(data.token.accessToken, data.token.refreshToken)
+          navigate('/')
+          setLoaading(false)
+        }
       })
-      .finally(() => setLoaading(false))
-  }
-  const handleTest = async () => {
-    testthis().then(k => console.log("tHe test", k))
-  }
+        .catch(err => console.log(">>", err))
+    } else {
+      await login({ variables: { password: password, email: email } }).then((resp) => {
+        const data = resp.data?.auth.login
+        if (data?.token !== undefined) {
+          if (userProps !== undefined && userProps?.user === undefined) {
+            userProps.setUser({ name: data.user.name, email: data.user.email })
+          }
+          setTokens(data.token.accessToken, data.token.refreshToken)
+        }
+        navigate('/')
+      })
+        .catch(err => {
+          console.log("zz", err)
+          form.setFields([{
+            name: 'password',
+            value: '',
+            errors: ['Login failed. Please check your email and password']
+          }])
+          message.error('Login faile. Please check your email and password');
+
+        })
+        .finally(() => setLoaading(false))
+    }
+  };
 
   return (
-    <div>
-      <input type="email" placeholder="email" onChange={(e) => { setUserEmail(e.target.value) }} />
-      <input type="email" placeholder="email" onChange={(e) => { setUserPass(e.target.value) }} />
-      <button onClick={handleSubmit} disabled={(userEmail?.length < 1 && userPass?.length < 1)}>Login</button>
-      {loading ? (
-        <p>Please Wait</p>
-      ) : ""}
-      <button onClick={handleTest}>Test</button>
-    </div>
-  )
-}
+    <Card style={{ width: 400, margin: '0 auto', marginTop: 50 }}>
+      <Title level={3} style={{ textAlign: 'center' }}>
+        {isRegister ? 'Register' : 'Login'}
+      </Title>
+      <Form
+        form={form}
+        name="auth_form"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        layout="vertical"
+      >
+        {isRegister && (
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: 'Please input your Name!' }]}
+          >
+            <Input />
+          </Form.Item>
+        )}
+        <Form.Item
+          name="email"
+          label="Email"
+          rules={[
+            { type: 'email', message: 'The input is not valid E-mail!' },
+            { required: true, message: 'Please input your E-mail!' },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[{ required: true, message: 'Please input your Password!' }]}
+        >
+          <Input.Password />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" block>
+            {isRegister ? 'Register' : 'Login'}
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type="link" onClick={handleToggle} block>
+            {isRegister ? 'Already have an account? Login' : 'Don\'t have an account? Register'}
+          </Button>
+        </Form.Item>
+      </Form>
+      {loading ? "Wait..." : ""}
+    </Card>
+  );
+};
+
