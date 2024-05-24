@@ -71,7 +71,9 @@ export const Navigation = () => {
         </Layout.Header>
       </nav>
       <Layout.Content>
-        <Outlet />
+        <div style={{minHeight: "calc(100vh - 210px)"}}>
+          <Outlet />
+        </div>
       </Layout.Content>
       <Layout.Footer>
         <h1>Footer</h1>

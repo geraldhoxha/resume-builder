@@ -13,7 +13,7 @@ export const LeftMenu = ({ mode }: Mode) => {
   const userContext = useUser();
 
   return (
-    <Menu mode={mode}>
+    <Menu disabledOverflow mode={mode}>
       {leftNavPath.map((item: MenuItem) => (
         <Menu.Item key={item.path}>
           <Link to={item.path}>{item.name}</Link>

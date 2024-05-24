@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode'
 
-export const getAccessToken = () => localStorage.getItem('accessToken');
+export const getAccessToken = () => localStorage.getItem('auth_token');
 
 export const isTokenValid = (token: string | null): boolean => {
   if (!token) return false;
@@ -16,8 +16,8 @@ export const isTokenValid = (token: string | null): boolean => {
 };
 
 export const clearTokens = () => {
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('refrsh_token');
 };
 
 

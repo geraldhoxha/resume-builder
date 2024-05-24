@@ -7,7 +7,26 @@ export const UserLogin = gql`mutation UserLogin($email:String!,$password: String
         accessToken
         refreshToken
       }
+      user{
+        name
+        email
+      }
     }
+  }
+}`
+
+export const UserSignup = gql`mutation UserSignup($input: NewUser!){
+  auth{
+    register(input: $input){
+      token{
+        accessToken
+        refreshToken
+      }
+      user{
+        name
+        email
+      }
+    } 
   }
 }`
 

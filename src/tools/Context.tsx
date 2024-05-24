@@ -1,19 +1,20 @@
+import { jwtDecode } from 'jwt-decode'
 import { createContext, useContext, useState } from 'react'
+import { getAccessToken } from '../components/utils/auth'
 
 
 type Actions = {
-  canDo: string[],
-  cannotDo: string[]
+  canDo: string[] | null,
+  cannotDo: string[] | null
 }
-
-type User = {
-  Name: string,
-  Email: string,
-  Actions?: Actions
+type Payload = {
+  name?: string | null,
+  email?: string | null,
+  actions?: Actions | null,
 }
 interface UserContextType {
-  user?: User,
-  setUser: (user?: User) => void
+  user?: Payload,
+  setUser: (user?: Payload) => void
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
@@ -28,7 +29,12 @@ interface UserProps {
 }
 
 export const UserProvider: React.FC<UserProps> = ({ children }: UserProps) => {
-  const [user, setUser] = useState<User | undefined>(undefined)
+  const accessToken: string | null = getAccessToken()
+  let payload = undefined
+  if (accessToken !== null){
+    payload = jwtDecode<Payload>(accessToken)
+  }
+  const [user, setUser] = useState<Payload | undefined>(payload)
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}
