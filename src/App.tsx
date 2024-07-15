@@ -5,6 +5,7 @@ import PrivateRoute from './components/Home/PrivateComponents';
 import { Login, Logout } from './components/Auth';
 import { Builder } from './components/Builder/Builder';
 import NotFound from './components/NotFound';
+import ResumeViewer from './components/Builder/Viewer';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/about" element={<Home />} />
           <Route path="/build" element={<Builder />} />
+          <Route path="/view" element={<ResumeViewer />} />
           <Route path="/log-out" element={<Logout />} />
         </Route>
         <Route path="/login" element={<Login />} />

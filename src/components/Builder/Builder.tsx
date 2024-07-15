@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Template, checkTemplate, Lang } from "@pdfme/common";
 import { Designer } from "@pdfme/ui";
 import {
@@ -40,7 +40,7 @@ export function Builder() {
   const designer = useRef<Designer | null>(null);
   const [lang, setLang] = useState<Lang>('en');
   const [templatePreset, setTemplatePreset] = useState<string>(localStorage.getItem("templatePreset") || initialTemplatePresetKey);
-  const [prevDesignerRef, setPrevDesignerRef] = useState<Designer | null>(null);
+  // const [prevDesignerRef, setPrevDesignerRef] = useState<Designer | null>(null);
 
   const buildDesigner = () => {
     let template: Template = getTemplateByPreset(localStorage.getItem('templatePreset') || "");
@@ -60,12 +60,12 @@ export function Builder() {
     }
 
     getFontsData().then((font) => {
+      console.log("><>", font)
       if (designerRef.current) {
         designer.current = new Designer({
           domContainer: designerRef.current,
           template,
           options: {
-            font,
             lang,
             labels: {
               'clear': '🗑️', // Add custom labels to consume them in your own plugins
@@ -82,6 +82,7 @@ export function Builder() {
         designer.current.onChangeTemplate(() => {
           setTemplatePreset(customTemplatePresetKey);
         })
+        console.log(",.,.....", designer.current)
       }
     });
   }
@@ -125,13 +126,20 @@ export function Builder() {
     buildDesigner();
   }
 
-  if (designerRef != prevDesignerRef) {
-    if (prevDesignerRef && designer.current) {
-      designer.current.destroy();
-    }
-    buildDesigner();
-    setPrevDesignerRef(designerRef);
-  }
+  // if (designerRef != prevDesignerRef) {
+  //   if (prevDesignerRef && designer.current) {
+  //     designer.current.destroy();
+  //   }
+  //   buildDesigner();
+  // }
+  // console.log("<>>", designerRef)
+  // console.log("<>>", prevDesignerRef)
+  // // setPrevDesignerRef(designerRef.current);
+  //
+
+  useEffect(()=> {
+    buildDesigner()
+  },[])
 
   return (
     <div>

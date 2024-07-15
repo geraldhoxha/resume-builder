@@ -127,12 +127,11 @@ export const generatePDF = async (currentRef: Designer | Form | Viewer | null) =
     typeof (currentRef as Viewer | Form).getInputs === 'function'
       ? (currentRef as Viewer | Form).getInputs()
       : getInputFromTemplate(template);
-  const font = await getFontsData();
-
+  // const font = await getFontsData();
   const pdf = await generate({
     template,
     inputs,
-    options: { font, title: 'pdfme' },
+    options: { title: 'pdfme' },
     plugins: getPlugins(),
   });
 
