@@ -2,7 +2,8 @@ import { ZOOM, Plugin, Schema } from '@pdfme/common';
 import SignaturePad from 'signature_pad';
 import { image } from '@pdfme/schemas';
 
-interface Signature extends Schema {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Signature extends Schema { }
 
 const getEffectiveScale = (element: HTMLElement | null) => {
   let scale = 1;
@@ -26,7 +27,10 @@ export const signature: Plugin<Signature> = {
     canvas.width = schema.width * ZOOM;
     canvas.height = schema.height * ZOOM;
     const resetScale = 1 / getEffectiveScale(rootElement);
-    canvas.getContext('2d')!.scale(resetScale, resetScale);
+    const ctx = canvas.getContext('2d')
+    if (ctx != null) {
+      ctx.scale(resetScale, resetScale)
+    }
 
     const signaturePad = new SignaturePad(canvas);
     try {

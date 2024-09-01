@@ -20,7 +20,6 @@ const customTemplatePresetKey = "custom";
 
 const templatePresets = getTemplatePresets();
 
-
 const translations: { label: string, value: string }[] = [
   { value: 'en', label: 'English' },
   { value: 'zh', label: 'Chinese' },

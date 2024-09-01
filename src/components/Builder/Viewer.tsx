@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import { Template, checkTemplate, getInputFromTemplate } from "@pdfme/common";
 import { Form, Viewer } from "@pdfme/ui";
 import {
@@ -14,7 +14,7 @@ const headerHeight = 71;
 
 type Mode = "form" | "viewer";
 
-
+type UIRef = SetStateAction<Form | Viewer | null>
 
 const initTemplate = () => {
   let template: Template = getTemplateByPreset(localStorage.getItem('templatePreset') || "")
@@ -120,12 +120,13 @@ function ResumeViewer() {
     }
   };
 
+
   if (uiRef.current != prevUiRef) {
     if (prevUiRef && ui.current) {
       ui.current.destroy();
     }
     buildUi(mode);
-    setPrevUiRef(uiRef.current as any);
+    setPrevUiRef(uiRef.current as UIRef);
   }
   useEffect(() => {
     if (ui.current) {
