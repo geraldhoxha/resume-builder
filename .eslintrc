@@ -18,7 +18,7 @@
     "no-tabs": ["error"],
     "react/jsx-tag-spacing": ["error", {"beforeSelfClosing": "always", "closingSlash": "never", "beforeClosing": "never"}],
     "react/react-in-jsx-scope": "off",
-    "no-trailing-spaces": ["error"]
+    "no-trailing-spaces": ["error"],
   },
   "settings": {
     "react": {

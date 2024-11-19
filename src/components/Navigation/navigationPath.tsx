@@ -1,4 +1,4 @@
-import { CodeOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { CodeOutlined, FileAddOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { MenuItem } from "../types/types";
 
 export const leftNavPath: MenuItem[] = [
@@ -25,6 +25,11 @@ export const rightNavPath: MenuItem[] = [
     name: 'Dashboard',
     path: '/dashboard',
     icon: <CodeOutlined />
+  },
+  {
+    name: "New Resume",
+    path: "/build",
+    icon: <FileAddOutlined />,
   },
   {
     name: 'Profile',
