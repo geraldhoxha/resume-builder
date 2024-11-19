@@ -15,6 +15,7 @@ import {
   ellipse,
 } from '@pdfme/schemas';
 import plugins from './plugins';
+import { ResumeTemplate1 } from './templates/resume1';
 
 const fontObjList = [
   {
@@ -65,10 +66,10 @@ export const cloneDeep = (obj: unknown) => JSON.parse(JSON.stringify(obj));
 const getTemplateFromJsonFile = (file: File) => {
   return readFile(file, 'text').then((jsonStr) => {
     const template: Template = JSON.parse(jsonStr as string);
-    checkTemplate(template);
-    return template;
-  });
-};
+    checkTemplate(template)
+    return template
+  })
+}
 
 export const downloadJsonFile = (json: unknown, title: string) => {
   if (typeof window !== 'undefined') {
@@ -147,6 +148,180 @@ export const isJsonString = (str: string) => {
   }
   return true;
 };
+
+const MyTemplate = (): Template => (
+  {
+    basePdf: {
+      width: 595, // A4 width in points
+      height: 842, // A4 height in points
+      padding: [40, 40, 40, 40], // padding for the document in points
+    },
+    schemas: [
+      {
+        header: {
+          type: "text",
+          content: "Jane Doe",
+          position: { x: 50, y: 50 },
+          width: 200,
+          height: 30,
+          rotate: 0,
+          opacity: 1,
+          readOnly: true,
+        },
+        title: {
+          type: "text",
+          content: "Full Stack Developer",
+          position: { x: 50, y: 90 },
+          width: 200,
+          height: 20,
+          rotate: 0,
+          opacity: 1,
+          readOnly: true,
+        },
+        contactEmail: {
+          type: "text",
+          content: "Email: janedoe@example.com",
+          position: { x: 50, y: 120 },
+          width: 200,
+          height: 15,
+          opacity: 1,
+        },
+        contactPhone: {
+          type: "text",
+          content: "Phone: (123) 456-7890",
+          position: { x: 50, y: 140 },
+          width: 200,
+          height: 15,
+          opacity: 1,
+        },
+        contactLinkedIn: {
+          type: "text",
+          content: "LinkedIn: linkedin.com/in/janedoe",
+          position: { x: 50, y: 160 },
+          width: 300,
+          height: 15,
+          opacity: 1,
+        },
+
+        // Professional Summary Section
+        summaryHeader: {
+          type: "text",
+          content: "Professional Summary",
+          position: { x: 50, y: 200 },
+          width: 300,
+          height: 20,
+          opacity: 1,
+          readOnly: true,
+        },
+        summaryText: {
+          type: "text",
+          content: "Experienced full-stack developer with expertise in JavaScript, React, Node.js, and SQL. Passionate about building efficient and scalable applications.",
+          position: { x: 50, y: 220 },
+          width: 500,
+          height: 40,
+          opacity: 0.8,
+        },
+
+        // Skills Section
+        skillsHeader: {
+          type: "text",
+          content: "Skills",
+          position: { x: 50, y: 280 },
+          width: 300,
+          height: 20,
+          opacity: 1,
+          readOnly: true,
+        },
+        skillsText: {
+          type: "text",
+          content: "JavaScript, React, Node.js, SQL, CSS, HTML, Git, REST APIs, Express, MongoDB",
+          position: { x: 50, y: 300 },
+          width: 500,
+          height: 20,
+          opacity: 0.8,
+        },
+
+        // Experience Section
+        experienceHeader: {
+          type: "text",
+          content: "Experience",
+          position: { x: 50, y: 340 },
+          width: 300,
+          height: 20,
+          opacity: 1,
+          readOnly: true,
+        },
+        job1Title: {
+          type: "text",
+          content: "Senior Developer - ABC Tech",
+          position: { x: 50, y: 370 },
+          width: 300,
+          height: 15,
+          opacity: 1,
+        },
+        job1Date: {
+          type: "text",
+          content: "June 2019 - Present",
+          position: { x: 400, y: 370 },
+          width: 150,
+          height: 15,
+          opacity: 0.8,
+        },
+        job1Description: {
+          type: "text",
+          content: "Led a team in building a scalable e-commerce platform. Implemented RESTful APIs, managed SQL database, and optimized performance.",
+          position: { x: 50, y: 390 },
+          width: 500,
+          height: 30,
+          opacity: 0.8,
+        },
+        job2Title: {
+          type: "text",
+          content: "Junior Developer - XYZ Corp",
+          position: { x: 50, y: 440 },
+          width: 300,
+          height: 15,
+          opacity: 1,
+        },
+        job2Date: {
+          type: "text",
+          content: "Jan 2017 - May 2019",
+          position: { x: 400, y: 440 },
+          width: 150,
+          height: 15,
+          opacity: 0.8,
+        },
+        job2Description: {
+          type: "text",
+          content: "Assisted in developing a client management system. Collaborated on optimizing database queries and improving UI components.",
+          position: { x: 50, y: 460 },
+          width: 500,
+          height: 30,
+          opacity: 0.8,
+        },
+
+        // Education Section
+        educationHeader: {
+          type: "text",
+          content: "Education",
+          position: { x: 50, y: 510 },
+          width: 300,
+          height: 20,
+          opacity: 1,
+          readOnly: true,
+        },
+        educationText: {
+          type: "text",
+          content: "Bachelor of Science in Computer Science - University of Technology, Graduated May 2017",
+          position: { x: 50, y: 530 },
+          width: 500,
+          height: 20,
+          opacity: 0.8,
+        },
+      },
+    ],
+  }
+)
 
 const getCertificateTemplate = (): Template => ({
   schemas: [
@@ -699,6 +874,7 @@ const getInvoiceTemplate = (): Template => ({
 
 const getBlankTemplate = () =>
   ({ schemas: [{}], basePdf: { width: 210, height: 297, padding: [0, 0, 0, 0] } } as Template);
+
 export const getTemplatePresets = (): {
   key: string;
   label: string;
@@ -708,6 +884,8 @@ export const getTemplatePresets = (): {
   { key: 'certificate', label: 'Certificate', template: getCertificateTemplate },
   { key: 'blank', label: 'Blank', template: getBlankTemplate },
   { key: 'custom', label: 'Custom', template: getBlankTemplate },
+  { key: 'MyTmp', label: 'MyBro', template: MyTemplate },
+  { key: "Resume", label: 'Resume', template: ResumeTemplate1 },
 ];
 
 export const getTemplateByPreset = (templatePreset: string): Template => {
